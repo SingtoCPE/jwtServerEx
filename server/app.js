@@ -46,6 +46,7 @@ app.post("/employee/login", (req, res) => {
     console.log("user:", userDB);
     console.log("pass:", passDB);
     console.log("userByClient:", userUI);
+    console.log("userByClient:", passUI);
     for (const o of userDB) {
       if (userUI === userDB) {
         if (passUI === passDB) {
