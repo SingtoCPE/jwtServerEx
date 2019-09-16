@@ -41,13 +41,13 @@ app.post("/employee/login", (req, res) => {
     if (err) throw err;
     const userFromUI = req.body.user;
     const passFromUI = req.body.password;
-    const userFromDB = results.map(results => results.user);
-    const passFromDB = results.map(results => results.password);
+    const userFromDB = results.find(results => results.user = 'singto1144');
+    const passFromDB = results.find(results => results.password = '11442525');
     console.log("user:", userFromDB);
     console.log("pass:", passFromDB);
     console.log("userByClient:", userFromUI);
     console.log("userByClient:", passFromUI);
-    for (const o of userFromDB) {
+    for (const o of userFromUI) {
       if (userFromUI === userFromDB) {
         if (passFromUI === passFromDB) {
           res.status(201).json("login success");
