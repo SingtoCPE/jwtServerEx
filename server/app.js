@@ -39,17 +39,17 @@ app.post("/employee/login", (req, res) => {
     "SELECT user,password FROM loginDB.tableDB WHERE user='singto1144';";
   db.query(sql, (err, results) => {
     if (err) throw err;
-    const userUI = req.body.user;
-    const passUI = req.body.password;
-    const userDB = results.map(results => results.user);
-    const passDB = results.map(results => results.password);
-    console.log("user:", userDB);
-    console.log("pass:", passDB);
-    console.log("userByClient:", userUI);
-    console.log("userByClient:", passUI);
-    for (const o of userDB) {
-      if (userUI === userDB) {
-        if (passUI === passDB) {
+    const userFromUI = req.body.user;
+    const passFromUI = req.body.password;
+    const userFromDB = results.map(results => results.user);
+    const passFromDB = results.map(results => results.password);
+    console.log("user:", userFromDB);
+    console.log("pass:", passFromDB);
+    console.log("userByClient:", userFromUI);
+    console.log("userByClient:", passFromUI);
+    for (const o of userFromDB) {
+      if (userFromUI === userFromDB) {
+        if (passFromUI === passFromDB) {
           res.status(201).json("login success");
         }
       }
