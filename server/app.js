@@ -43,13 +43,13 @@ app.post("/employee/login", (req, res) => {
     const passFromUI = req.body.password;
     const userFromDB = results.find(results => results.user = 'singto1144');
     const passFromDB = results.find(results => results.password = '11442525');
-    console.log("user:", userFromDB);
-    console.log("pass:", passFromDB);
+    console.log("user:", userFromDB.user);
+    console.log("pass:", passFromDB.password);
     console.log("userByClient:", userFromUI);
     console.log("userByClient:", passFromUI);
     for (const o of userFromUI) {
-      if (userFromUI === userFromDB) {
-        if (passFromUI === passFromDB) {
+      if (userFromUI === userFromDB.user) {
+        if (passFromUI === passFromDB.password) {
           res.status(201).json("login success");
         }
       }
