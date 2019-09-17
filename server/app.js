@@ -36,25 +36,18 @@ app.get("/employee", (req, res) => {
 //----------------------------------------------------------
 app.post("/employee/login", (req, res) => {
   let sql =
-    "SELECT user,password FROM loginDB.tableDB WHERE user='singto1144';";
+    `SELECT user,password FROM loginDB.tableDB WHERE user='${req.body.user}';`;
   db.query(sql, (err, results) => {
     if (err) throw err;
-    const userFromUI = req.body.user;
-    const passFromUI = req.body.password;
-    const userFromDB = results.find(results => results.user = 'singto1144');
-    const passFromDB = results.find(results => results.password = '11442525');
-    console.log("user:", userFromDB.user);
-    console.log("pass:", passFromDB.password);
-    console.log("userByClient:", userFromUI);
-    console.log("userByClient:", passFromUI);
-    for (const o of userFromUI) {
-      if (userFromUI === userFromDB.user) {
-        if (passFromUI === passFromDB.password) {
-          res.status(201).json("login success");
-        }
+    if(results.length > 0){
+      const userFormDB = results[0];
+      if(userFormDB.password === req.body.password){
+        res.send('Login success...');
       }
     }
-    res.status(403).json("login failed");
+    else{
+      res.send('Login failed...');
+    }
   });
 });
 // ---------------------------------------------------------
