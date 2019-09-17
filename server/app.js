@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const path = require("path");
 const app = express();
+const token = "1234";
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
@@ -34,19 +35,27 @@ app.get("/employee", (req, res) => {
   });
 });
 //----------------------------------------------------------
+app.post("/employee/token", (req, res) => {
+  const tokenInput = req.header("authorization");
+  console.log(tokenInput);
+  if (token === tokenInput) {
+    res.send("Login success...");
+  } else {
+    res.send("Login failed...");
+  }
+});
+//----------------------------------------------------------
 app.post("/employee/login", (req, res) => {
-  let sql =
-    `SELECT user,password FROM loginDB.tableDB WHERE user='${req.body.user}';`;
+  let sql = `SELECT user,password FROM loginDB.tableDB WHERE user='${req.body.user}';`;
   db.query(sql, (err, results) => {
     if (err) throw err;
-    if(results.length > 0){
+    if (results.length > 0) {
       const userFormDB = results[0];
-      if(userFormDB.password === req.body.password){
-        res.send('Login success...');
+      if (userFormDB.password === req.body.password) {
+        res.json({ token });
       }
-    }
-    else{
-      res.send('Login failed...');
+    } else {
+      res.send("Login failed...");
     }
   });
 });
